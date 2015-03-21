@@ -5,6 +5,9 @@
  */
 package com.seniorproject.colordetection.main;
 
+import com.github.sarxos.webcam.Webcam;
+import com.seniorproject.colordetection.constant.WebcamDimensions;
+import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
@@ -21,14 +24,29 @@ public class ColorDetector extends javax.swing.JFrame {
      */
     public ColorDetector() {
         initComponents();
+        
+        final Webcam webcam = Webcam.getWebcams().get(1);
+        final Dimension dimension = WebcamDimensions.XL;
+        
+        webcam.setViewSize(dimension);
+        
+        colorDetectorPanel.setMaximumSize(dimension);
+        colorDetectorPanel.setPreferredSize(dimension);
+        setPreferredSize(dimension);
+        setResizable(true);
+        
         SwingWorker worker = new SwingWorker() {
-
+            
             @Override
             protected Object doInBackground() throws Exception {
+                
+                webcam.open();
                 while(isVisible()){
-                    final BufferedImage bufferedImage = ImageIO.read(new File("E:\\001.jpg"));
+                    final BufferedImage bufferedImage = webcam.getImage();
+//                    final BufferedImage bufferedImage = ImageIO.read(new File("E:\\001.jpg"));
                     colorDetectorPanel.setImage(bufferedImage);
                     colorDetectorPanel.repaint();
+                    Thread.sleep(100);
                 }
                 
                 return null;

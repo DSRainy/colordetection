@@ -7,31 +7,26 @@ package com.seniorproject.colordetection.controller;
 
 import com.seniorproject.colordetection.algorithm.ColorConverter;
 import com.seniorproject.colordetection.utils.ImageUtil;
-import java.awt.image.BufferedImage;
-import java.util.List;
 
 /**
  *
  * @author RainWhileLoop
  */
-public class MyProcess extends AbstractProcess{
-    private BufferedImage imgIn;
-    private BufferedImage imgOut;
-    
+public class MyProcess extends AbstractProcess {
+
     private final ColorConverter converter;
 
     public MyProcess() {
         this.converter = new ColorConverter();
     }
-    
+
     @Override
-    public void execute(){
-        int[][] data = ImageUtil.convertToArray(imgIn);
+    public void execute() {
+        int[][] data = ImageUtil.changeImageToArray(imgIn);
         this.converter.setData(data);
         this.converter.execute();
         data = this.converter.getData();
-        
+        imgOut = ImageUtil.getImage(data);
     }
-    
-    
+
 }

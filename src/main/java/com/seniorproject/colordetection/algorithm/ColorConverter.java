@@ -29,19 +29,19 @@ public class ColorConverter {
     }
 
     public void execute() {
-        
+        float[] hsv = new float[3];
         //Changing RGB value to HSV value
-        for (int row = 0; row < this.data.length; row++) {
-            for (int col = 0; col < this.data[1].length; col++) {
-                int r = this.data[row][col] >> 16 & 0xFF;
-                int g = this.data[row][col] >> 8 & 0xFF;
-                int b = this.data[row][col] & 0xFF;
-                float[] hsv = Color.RGBtoHSB(r, g, b, null);
-                
-                this.data[row][col] = this.threshold(hsv);
+        for (int y = 0; y < this.data[1].length; y++) {
+            for (int x = 0; x < this.data.length; x++) {
+                int r = this.data[x][y] >> 16 & 0xFF;
+                int g = this.data[x][y] >> 8 & 0xFF;
+                int b = this.data[x][y] & 0xFF;
+                hsv = Color.RGBtoHSB(r, g, b, hsv);
+//                this.data[x][y] = Color.getHSBColor(hsv[0], 1f, 1f).getRGB();
+                this.data[x][y] = this.threshold(hsv);
             }
         }
-                
+
     }
 
     private int threshold(float[] hsv) {
@@ -54,7 +54,7 @@ public class ColorConverter {
             return -1;
         }
     }
-    
+
     public void setData(int[][] data) {
         this.data = data;
     }

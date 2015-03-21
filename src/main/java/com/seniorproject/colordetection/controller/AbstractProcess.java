@@ -12,17 +12,16 @@ import java.awt.image.BufferedImage;
  * @author RainWhileLoop
  */
 public abstract class AbstractProcess {
-    private BufferedImage imgIn;
-    private BufferedImage imgOut;
+    protected BufferedImage imgIn;
+    protected BufferedImage imgOut;
     
-    public void setImgIn(BufferedImage imgIn) {
-        this.imgIn = imgIn;
+    public void setImgIn(BufferedImage image) {
+        this.imgIn = image;
     }
 
     public BufferedImage getImgOut() {
-        return imgOut;
+        return this.imgOut;
     }
-    
     
     public abstract void execute();
 }

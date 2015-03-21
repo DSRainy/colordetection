@@ -8,6 +8,8 @@ package com.seniorproject.colordetection.controller;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JPanel;
 
 /**
@@ -30,8 +32,14 @@ public class ColorDetectorPanel extends JPanel {
     }
 
     public void setImage(BufferedImage image) {
-        this.image = image;
+//        this.image = image;
         processor.setImgIn(image);
-        processor.execute();
+        try {
+            processor.execute();
+        } catch (Exception ex) {
+            Logger.getLogger(ColorDetectorPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.image = processor.getImgOut();
+        
     }
 }
