@@ -14,22 +14,17 @@ import java.awt.Color;
 public class ColorConverter {
 
     private int[][] data;
-    private final float[] highThreshold;
-    private final float[] lowThreshold;
+    private float[] highThreshold;
+    private float[] lowThreshold;
 
     public ColorConverter() {
         lowThreshold = new float[3];
-        lowThreshold[0] = 144.0f;
-        lowThreshold[1] = 0.6f;
-        lowThreshold[2] = 0.0f;
         highThreshold = new float[3];
-        highThreshold[0] = 288.0f;
-        highThreshold[1] = 1.0f;
-        highThreshold[2] = 0.4f;
     }
 
     public void execute() {
         float[] hsv = new float[3];
+        
         //Changing RGB value to HSV value
         for (int y = 0; y < this.data[1].length; y++) {
             for (int x = 0; x < this.data.length; x++) {
@@ -63,4 +58,9 @@ public class ColorConverter {
         return data;
     }
 
+    public void setThreshold(float[] low, float[] high){
+        lowThreshold = low;
+        highThreshold = high;
+    }
+    
 }

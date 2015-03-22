@@ -8,8 +8,11 @@ package com.seniorproject.colordetection.controller;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 /**
@@ -19,7 +22,7 @@ import javax.swing.JPanel;
 public class ColorDetectorPanel extends JPanel {
 
     private BufferedImage image;
-    
+
     AbstractProcess processor = new MyProcess();
 
     @Override
@@ -32,14 +35,21 @@ public class ColorDetectorPanel extends JPanel {
     }
 
     public void setImage(BufferedImage image) {
-//        this.image = image;
-        processor.setImgIn(image);
-        try {
-            processor.execute();
-        } catch (Exception ex) {
-            Logger.getLogger(ColorDetectorPanel.class.getName()).log(Level.SEVERE, null, ex);
+        if (image != null) {
+            processor.setImgIn(image);
+            try {
+                processor.execute();
+            } catch (Exception ex) {
+                Logger.getLogger(ColorDetectorPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            this.image = processor.getImgOut();
         }
-        this.image = processor.getImgOut();
-        
+        else{
+            try {
+                this.image = ImageIO.read(new FileInputStream("src/main/resources/images/colorbar.jpg"));
+            } catch (IOException ex) {
+                Logger.getLogger(ColorDetectorPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 }
